@@ -1,0 +1,39 @@
+# XS para temperatura 300K BOL (Begin of Life)
+# calculados com WIMS. 07/07/2016
+#
+#
+
+
+MATERIAL fuel {
+D1           0.0108349
+SigmaA1      0.771135
+nuSigmaF1    0.500982
+
+SigmaS1.2    3.3991
+
+eSigmaF1     nuSigmaF1(x,y,z)
+
+D2           0.00314942
+SigmaA2      11.0389
+nuSigmaF2    20.1943
+eSigmaF2     nuSigmaF2(x,y,z)
+
+}
+
+MATERIAL cladding {
+D1           0.0299644
+SigmaA1      0.0288617
+SigmaS1.2    3.3991
+
+D2           0.0376276
+SigmaA2      0.874322
+}
+
+MATERIAL coolant {
+D1           0.0126587
+SigmaA1      0.0290925
+SigmaS1.2    3.3991
+
+D2           0.00213616
+SigmaA2      1.42651
+}
