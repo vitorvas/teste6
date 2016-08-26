@@ -1,0 +1,57 @@
+MILONGA_DEBUG FILE_PATH teste6
+
+# 25/08/2016
+#
+# Script for teste6 case.
+#
+# Set transient time to infinite, so milonga will
+# wait for OpenFOAM until it ends.
+# end_time = infinite
+
+# IMPORTANT:
+#
+# This version does not change properties:
+# every cell has always the same cross-sections
+
+# Make dt = 1. This does not affect milonga calculations
+# since it solves a steady-state problem.
+# Set for making time-steps named files.
+# dt = 1
+
+MESH NAME celula FILE_PATH ../../malhas/celula.msh
+
+MILONGA_PROBLEM FORMULATION diffusion SCHEME volumes DIMENSIONS 3 GROUPS 2
+
+PRINT "\# Number of cells: " %.0f cells
+
+INCLUDE t_300_bol.mil
+
+PHYSICAL_ENTITY NAME parede BC mirror
+PHYSICAL_ENTITY NAME extremos BC vacuum
+PHYSICAL_ENTITY NAME inlet BC vacuum
+PHYSICAL_ENTITY NAME outlet BC vacuum
+
+# O mesmo do OpenFOAM
+# 1.138e+07 Q/m^3
+# 3965 Q
+
+power = 3965.0 
+
+PRINT TEXT "\# building..." NONEWLINE
+MILONGA_STEP JUST_BUILD
+PRINT TEXT " done."
+
+PRINT "\# solving..." NONEWLINE
+MILONGA_STEP JUST_SOLVE
+PRINT TEXT " done."
+
+PRINT "\# cpu time [sec] = "  %.2f time_cpu_build "(build) "  %.2f time_cpu_solve "(solve)"  SEP " "
+
+mypow(x,y,z) := pow(x,y,z)*power
+
+PRINT TEXT "\# Writing vtk file..." NONEWLINE
+MESH_POST FILE_PATH teste6_stdalone.vtk pow mypow phi1 phi2
+PRINT TEXT " done."
+
+
+
